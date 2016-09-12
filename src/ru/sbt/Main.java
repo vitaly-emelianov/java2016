@@ -27,7 +27,6 @@ public class Main {
     }
 
 
-
     public static void run(int x) { // передается копия (ссылки, примитивного типа)
         x = 12; //
     }
