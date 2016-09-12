@@ -26,11 +26,7 @@ public class Main {
                 .toString();
     }
 
-    public <T>  T plus(T arg1, T arg2) {
-        if (arg1 instanceof String && arg2 instanceof String) {
-            return arg1 + arg2;
-        }
-    }
+
 
     public static void run(int x) { // передается копия (ссылки, примитивного типа)
         x = 12; //
