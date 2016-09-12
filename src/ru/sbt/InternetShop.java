@@ -5,6 +5,8 @@ package ru.sbt;
  */
 public interface InternetShop { // нет множественного наследования, но может релизовать большое количетсов интерфейсов
     void order(String itemId);
+
     String[] getAvailableItemId();
+
     String[] getoOrderedItemId();
 }
