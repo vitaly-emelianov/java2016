@@ -22,6 +22,10 @@ public class Movie {
         this.cost = cost;
     }
 
+    public static Movie byName(String name) { // статический метод для создания Movie: Movie.byName("sdf") !
+        return new Movie(name);
+    }
+
     public String getName() {
         return name;
     }
@@ -43,7 +47,10 @@ public class Movie {
     }
 
     public double calculatePrice() {
-
+        if (getDate().getYear() == 2014 ) {
+            return 200.234234;
+        }
+        getDate()
     }
 }
 
