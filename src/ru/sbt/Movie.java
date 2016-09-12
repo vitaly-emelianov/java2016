@@ -47,7 +47,7 @@ public class Movie {
     }
 
     public double calculatePrice() {
-        if (getDate().getYear() == 2014 ) {
+        if (getDate().getYear() == 2014) {
             return 200.234234;
         }
         getDate()
