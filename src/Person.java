@@ -8,7 +8,6 @@ public class Person {
         return name;
     }
 
-
     public void setName(String name) { // вообще setter никогда не используют, нужны только конструкторы
         this.name = name;
     }
