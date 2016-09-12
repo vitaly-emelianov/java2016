@@ -21,14 +21,5 @@ public class Person {
     public Person(int age) {
         this("Unknown", age); // вызов другого конструктора
     }
-    String concat = line.concat("WORLD")
-            .replace("o", "f")
-            .toLowerCase();
-    // Ctrl + Q - вызов документации
 
-    StringBuilder builder = new StringBuilder("Hello");
-    String result = builder.append("WORLD") // не копируются, потом приводим к String
-        .append("!")
-        .append("DDF")
-        .toString();
 }
