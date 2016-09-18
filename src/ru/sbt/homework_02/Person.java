@@ -86,6 +86,7 @@ public class Person {
         System.out.println(amy.getSpouse().getName());
         System.out.println(ann.getSpouse() == null);
 
+        
         System.out.println(ann.marry(walter));
         System.out.println(walter.getSpouse().getName());
 //        System.out.println(ann.getSpouse().getName());
