@@ -1,4 +1,4 @@
-package ru.sbt;
+package ru.sbt.classwork_12_09;
 
 /**
  * Created by vitaly on 9/12/16.
