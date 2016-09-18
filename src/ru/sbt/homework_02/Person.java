@@ -19,10 +19,6 @@ public class Person {
         this.name = name;
     }
 
-    public boolean isMan() {
-        return man;
-    }
-
     public String getName() {
         return name;
     }
@@ -40,7 +36,7 @@ public class Person {
      * @return - returns true if this person has another gender than passed person and they are not husband and wife, false otherwise
      */
     public boolean marry(Person person) {
-        if (man && !person.man) {
+        if (man != person.man) {
             if (spouse != null && spouse.getName().equals(person.name)) {
                 return false;
             } else {
@@ -50,7 +46,7 @@ public class Person {
                 if (person.getSpouse() != null) {
                     person.getSpouse().divorce();
                 }
-                this.spouse = person;
+                spouse = person;
                 person.spouse = this;
                 return true;
             }
@@ -86,10 +82,10 @@ public class Person {
         System.out.println(amy.getSpouse().getName());
         System.out.println(ann.getSpouse() == null);
 
-        
+
         System.out.println(ann.marry(walter));
         System.out.println(walter.getSpouse().getName());
-//        System.out.println(ann.getSpouse().getName());
+        System.out.println(ann.getSpouse().getName());
 
     }
 }
