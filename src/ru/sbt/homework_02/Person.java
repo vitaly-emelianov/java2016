@@ -72,7 +72,6 @@ public class Person {
     public static void main(String[] args) {
         Person jack = new Person(true, "Jack");
         Person ann = new Person(false, "Ann");
-        Person john = new Person(true, "John");
         Person walter = new Person(true, "Walter");
         Person amy = new Person(false, "Amy");
 
@@ -82,10 +81,10 @@ public class Person {
         System.out.println(amy.getSpouse().getName());
         System.out.println(ann.getSpouse() == null);
 
-
         System.out.println(ann.marry(walter));
         System.out.println(walter.getSpouse().getName());
         System.out.println(ann.getSpouse().getName());
 
+        System.out.println(ann.marry(walter));
     }
 }
