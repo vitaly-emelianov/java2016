@@ -26,14 +26,12 @@ public class PopularWord {
             }
         }
         FileWriter fw = new FileWriter(new File("/home/vitaly/Desktop/output.txt"));
-        for (Map.Entry<String, Integer> entry: tokenCounter.entrySet()) {
+        for (Map.Entry<String, Integer> entry : tokenCounter.entrySet()) {
             if (entry.getValue() == max_count) {
                 fw.write(entry.getKey() + "\n");
                 fw.flush();
             }
         }
         fw.close();
-
     }
-
 }
