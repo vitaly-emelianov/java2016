@@ -23,7 +23,7 @@ public class CollectionUtils {
     }
 
     public static <T> List limit(List<? extends T> source, int size) {
-        return source.subList(0 ,size);
+        return source.subList(0, size);
     }
 
     public static <T> void add(List<? super T> source, T o) {
@@ -31,7 +31,7 @@ public class CollectionUtils {
     }
 
     public static <T> void removeAll(List<? extends T> removeFrom, List<? super T> c2) {
-        for (T o: removeFrom) {
+        for (T o : removeFrom) {
             c2.add(o);
             removeFrom.remove(o);
         }
@@ -42,7 +42,7 @@ public class CollectionUtils {
     }
 
     public static <T> boolean containsAny(List<? extends T> c1, List<? extends T> c2) {
-        for (T o: c2) {
+        for (T o : c2) {
             if (c1.contains(o)) {
                 return true;
             }
@@ -50,9 +50,9 @@ public class CollectionUtils {
         return false;
     }
 
-    public static <T extends Comparable<? super T>> List range(List<? extends T> list, T  min, T max) {
+    public static <T extends Comparable<? super T>> List range(List<? extends T> list, T min, T max) {
         List<T> sublist = new ArrayList<>();
-        for (T o: list) {
+        for (T o : list) {
             if (o.compareTo(min) >= 0 && o.compareTo(max) <= 0) {
                 sublist.add(o);
             }
@@ -62,7 +62,7 @@ public class CollectionUtils {
 
     public static <T> List range(List<? extends T> list, T min, T max, Comparator<? super T> comparator) {
         List<T> sublist = new ArrayList<>();
-        for (T o: list) {
+        for (T o : list) {
             if (comparator.compare(o, min) >= 0 && comparator.compare(o, max) <= 0) {
                 sublist.add(o);
             }
@@ -73,7 +73,7 @@ public class CollectionUtils {
 
     public static void main(String[] args) {
         CollectionUtils utils = new CollectionUtils();
-        System.out.println(utils.range(Arrays.asList(8,1,3,5,6,4), 3, 6));
+        System.out.println(utils.range(Arrays.asList(8, 1, 3, 5, 6, 4), 3, 6));
     }
 
 }
