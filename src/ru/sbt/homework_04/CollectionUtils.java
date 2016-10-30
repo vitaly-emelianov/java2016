@@ -72,8 +72,20 @@ public class CollectionUtils {
 
 
     public static void main(String[] args) {
+        List<Integer> source = new ArrayList<>();
+        source.add(1);
+        source.add(1231);
+        source.add(332);
+        source.add(332);
+
+        List<Number> destination = new ArrayList<>();
+        destination.add(1);
+
         CollectionUtils utils = new CollectionUtils();
-        System.out.println(utils.range(Arrays.asList(8, 1, 3, 5, 6, 4), 3, 6));
+        Number a = 2;
+        utils.add(destination, a);
+        utils.add(destination, 12.3);
+        System.out.println(destination);
     }
 
 }
