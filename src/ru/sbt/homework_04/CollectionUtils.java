@@ -84,7 +84,6 @@ public class CollectionUtils {
         CollectionUtils utils = new CollectionUtils();
         Number a = 2;
         utils.add(destination, a);
-        utils.add(destination, 12.3);
         System.out.println(destination);
     }
 

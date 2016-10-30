@@ -7,36 +7,36 @@ import java.util.*;
  */
 public class CountMapImpl<T> implements CountMap<T> {
 
-    private final Map<T, Integer> map1;
+    private final Map<T, Integer> map;
 
     public CountMapImpl() {
-        map1 = new TreeMap<T, Integer>();
+        map = new TreeMap<T, Integer>();
     }
 
     public void add(T o) {
-        if (map1.containsKey(o)) {
-            map1.put(o, map1.get(o) + 1);
+        if (map.containsKey(o)) {
+            map.put(o, map.get(o) + 1);
         } else {
-            map1.put(o, 1);
+            map.put(o, 1);
         }
     }
 
     public int getCount(T o) {
-        return map1.getOrDefault(o, 0);
+        return map.getOrDefault(o, 0);
     }
 
     public int remove(T o) {
-        int counter = map1.get(o);
+        int counter = map.get(o);
         if (counter > 1) {
-            map1.put(o, counter - 1);
+            map.put(o, counter - 1);
         } else {
-            map1.remove(o);
+            map.remove(o);
         }
         return counter;
     }
 
     public int size() {
-        return map1.size();
+        return map.size();
     }
 
     public void addAll(CountMap<? extends T> source) {
@@ -45,20 +45,20 @@ public class CountMapImpl<T> implements CountMap<T> {
             Map.Entry entry = (Map.Entry) entries.next();
             T element = (T) entry.getKey();
             Integer counter = (Integer) entry.getValue();
-            if (map1.containsKey(element)) {
-                map1.put(element, map1.get(element) + counter);
+            if (map.containsKey(element)) {
+                map.put(element, map.get(element) + counter);
             } else {
-                map1.put(element, counter);
+                map.put(element, counter);
             }
         }
     }
 
     public Map toMap() {
-        return map1;
+        return map;
     }
 
     public void toMap(Map<? super T, Integer> destination) {
-        destination.putAll(map1);
+        destination.putAll(map);
     }
 
     public static void main(String[] args) {
@@ -73,7 +73,7 @@ public class CountMapImpl<T> implements CountMap<T> {
 
         CountMap<String> map2 = new CountMapImpl<>();
         map2.add("jack");
-        map2.add("jonny");
+        map2.add("johnny");
         map2.add("chad");
 
         map1.addAll(map2);
