@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class CalculatorImpl implements Calculator{
     private final Map<String, Integer> cache = new HashMap<>();
+
     @Override
     public int calc(String b) {
         if (cache.containsKey(b)) {

@@ -50,7 +50,7 @@ public class ReflectionUtils {
     public static void main(String[] args) {
         Integer a = 12;
         ReflectionUtils reflectionUtil = new ReflectionUtils();
-        Person p = new Person("jack", "russel", 122);
+        Person p = new Person("amanda", "russel", 122);
         System.out.println(reflectionUtil.printAllInvokedGetters(p));
     }
 }

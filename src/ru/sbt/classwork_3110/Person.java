@@ -5,7 +5,12 @@ package ru.sbt.classwork_3110;
  */
 public class Person {
     private final String name;
-    private final String surname;
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    private String surname;
     private final int age;
 
     public Person(String name, String surname, int age) {
@@ -24,5 +29,9 @@ public class Person {
 
     public int getAge() {
         return age;
+    }
+
+    public String toString() {
+        return name + " " + surname + " " + age;
     }
 }
