@@ -1,4 +1,4 @@
-package ru.sbt.classwork1411;
+package ru.sbt.classwork_14_11;
 
 /**
  * Created by vitaly on 14.11.16.

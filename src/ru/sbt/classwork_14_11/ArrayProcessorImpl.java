@@ -1,4 +1,4 @@
-package ru.sbt.classwork1411;
+package ru.sbt.classwork_14_11;
 
 import java.util.ArrayList;
 import java.util.List;
