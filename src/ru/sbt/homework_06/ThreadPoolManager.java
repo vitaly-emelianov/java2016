@@ -10,7 +10,7 @@ public class ThreadPoolManager {
     private final int capacity;
     private final BlockingQueue<Runnable> blockingQueue = new BlockingQueue<>();
     ;
-    private final List<Thread> threads = new ArrayList<Thread>();
+    private final List<Thread> threads = new ArrayList<>();
 
     public ThreadPoolManager(int capacity) {
         this.capacity = capacity;
