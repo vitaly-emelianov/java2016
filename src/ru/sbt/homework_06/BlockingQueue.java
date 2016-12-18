@@ -8,7 +8,7 @@ import java.util.Queue;
  */
 public class BlockingQueue<E> implements CustomQueue<E> {
 
-    Queue<E> elements = new LinkedList<>();
+    private final Queue<E> elements = new LinkedList<>();
 
     @Override
     public synchronized void enqueue(E e) {
@@ -18,15 +18,18 @@ public class BlockingQueue<E> implements CustomQueue<E> {
 
     @Override
     public synchronized E dequeue() {
-        E e = null;
         while (elements.isEmpty()) {
             try {
                 wait();
             } catch (InterruptedException exception) {
-                return e;
+                return null;
             }
         }
-        e = elements.remove();
-        return e;
+        return elements.remove();
+    }
+
+    @Override
+    public synchronized boolean isEmpty() {
+        return elements.isEmpty();
     }
 }

@@ -1,27 +1,32 @@
 package ru.sbt.homework_06;
 
+import com.sun.corba.se.spi.orbutil.threadpool.ThreadPool;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by vitaly on 14.11.16.
  */
 public class ThreadPoolManager {
-    private final int capacity;
+    private final int poolSize;
     private final BlockingQueue<Runnable> blockingQueue = new BlockingQueue<>();
-    ;
     private final List<Thread> threads = new ArrayList<>();
+    private boolean isEmpty;
+    private boolean isInterrupted;
 
-    public ThreadPoolManager(int capacity) {
-        this.capacity = capacity;
+    public ThreadPoolManager(int poolSize) {
+        this.poolSize = poolSize;
         this.initAllConsumers();
+        isInterrupted = false;
     }
 
     private void initAllConsumers() {
-        for (Integer i = 0; i < capacity; i++) {
+        for (Integer i = 0; i < poolSize; i++) {
             Thread thread = new Thread(new Worker(blockingQueue, i.toString()));
-            thread.start();
             threads.add(thread);
+            thread.start();
         }
     }
 
@@ -29,22 +34,59 @@ public class ThreadPoolManager {
         blockingQueue.enqueue(r);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        int capacity = 10;
-        ThreadPoolManager manager = new ThreadPoolManager(capacity);
-        for (int i = 0; i < capacity; i++) {
-            manager.submitTask(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        System.out.println("hello");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
+    private synchronized boolean isInterrupted() {
+        return isInterrupted;
+    }
+
+    private class Worker implements Runnable {
+
+        private String name;
+        private BlockingQueue<Runnable> queue;
+
+        public Worker(BlockingQueue<Runnable> blockingQueue, String workerID) {
+            this.queue = blockingQueue;
+            this.name = workerID;
         }
+
+        @Override
+        public void run() {
+            while (true) {
+                Runnable runnable = queue.dequeue();
+                runnable.run();
+                System.out.println("Task was completed by " + this.name);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ThreadPoolManager manager = new ThreadPoolManager(10);
+
+        manager.submitTask(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Starting Task A....");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Task A Completed....");
+            }
+        });
+
+        manager.submitTask(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Starting Task B....");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Task B Completed....");
+            }
+        });
     }
 }
 
