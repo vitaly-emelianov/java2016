@@ -1,4 +1,4 @@
-package ru.sbt.homework_06;
+package ru.sbt.homework_mutlithreading.homework_06;
 
 import java.util.LinkedList;
 import java.util.Queue;

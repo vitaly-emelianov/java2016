@@ -1,10 +1,7 @@
-package ru.sbt.homework_06;
-
-import com.sun.corba.se.spi.orbutil.threadpool.ThreadPool;
+package ru.sbt.homework_mutlithreading.homework_06;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by vitaly on 14.11.16.
@@ -13,13 +10,10 @@ public class ThreadPoolManager {
     private final int poolSize;
     private final BlockingQueue<Runnable> blockingQueue = new BlockingQueue<>();
     private final List<Thread> threads = new ArrayList<>();
-    private boolean isEmpty;
-    private boolean isInterrupted;
 
     public ThreadPoolManager(int poolSize) {
         this.poolSize = poolSize;
         this.initAllConsumers();
-        isInterrupted = false;
     }
 
     private void initAllConsumers() {
@@ -30,13 +24,10 @@ public class ThreadPoolManager {
         }
     }
 
-    public void submitTask(Runnable r) {
-        blockingQueue.enqueue(r);
-    }
-
-
-    private synchronized boolean isInterrupted() {
-        return isInterrupted;
+    public void submitTasks(Runnable... runnables) {
+        for (Runnable runnable: runnables) {
+            blockingQueue.enqueue(runnable);
+        }
     }
 
     private class Worker implements Runnable {
@@ -51,7 +42,7 @@ public class ThreadPoolManager {
 
         @Override
         public void run() {
-            while (true) {
+            while (!blockingQueue.isEmpty()) {
                 Runnable runnable = queue.dequeue();
                 runnable.run();
                 System.out.println("Task was completed by " + this.name);
@@ -61,32 +52,19 @@ public class ThreadPoolManager {
 
     public static void main(String[] args) throws InterruptedException {
         ThreadPoolManager manager = new ThreadPoolManager(10);
-
-        manager.submitTask(new Runnable() {
+        List<Runnable> runnables = new ArrayList<>();
+        runnables.add(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Starting Task A....");
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Task A Completed....");
-            }
-        });
-
-        manager.submitTask(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Starting Task B....");
+                System.out.println("hello");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Task B Completed....");
             }
         });
+
     }
 }
 
