@@ -6,18 +6,39 @@ package ru.sbt.homework_terminal;
 public class TerminalImpl implements Terminal {
 
     private final Session session;
-    public int numberOfFailedAuthorizations;
+    private int numberOfAuthorizationAttempts = 3;
+    private long time = 0;
+
 
     private class Session {
-        public String accountId;
-        public TerminalServer terminalServer = new TerminalServerImpl();
-        public Status status = Status.UNAUTHORIZED;
+        private String accountId;
+        private TerminalServer terminalServer = new TerminalServerImpl();
+        private Status sessionStatus = Status.UNAUTHORIZED;
+
+        public TerminalServer makeRequest() throws Exception {
+            if (sessionStatus == Status.UNAUTHORIZED) {
+                throw new Exception();
+            } else {
+                return terminalServer;
+            }
+        }
 
         public Session(String accountId, int pinCode, int cardKey) {
-            this.accountId = accountId;
-            this.terminalServer = new TerminalServerImpl();
+            if (TerminalImpl.this.numberOfAuthorizationAttempts == 0) {
+                if (System.currentTimeMillis() - time > 5000) {
+                    TerminalImpl.this.time = System.currentTimeMillis();
+                    TerminalImpl.this.numberOfAuthorizationAttempts = 3;
+                }
+            }
             if (authorize(pinCode, cardKey)) {
-                session.status = Status.AUTHORIZED;
+                this.accountId = accountId;
+                this.terminalServer = new TerminalServerImpl();
+                this.sessionStatus = Status.AUTHORIZED;
+            } else {
+                TerminalImpl.this.numberOfAuthorizationAttempts -= 1;
+                if (TerminalImpl.this.numberOfAuthorizationAttempts == 0) {
+                    time = System.currentTimeMillis();
+                }
             }
         }
 
@@ -28,23 +49,43 @@ public class TerminalImpl implements Terminal {
 
     public TerminalImpl(String accountId, int pinCode, int cardKey) throws Exception {
         session = new Session(accountId, pinCode, cardKey);
-        if (session.status == Status.AUTHORIZED) {
-            throw new Exception("Pin code isn't valid.");
-        }
     }
 
     @Override
     public String accountReport(String accountId) {
-        return session.terminalServer.getAccountReport(accountId);
+        try {
+            return session.makeRequest().getAccountReport(accountId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
-    public void addMoney(String accountId, long money) throws Exception {
-        session.terminalServer.addMoney(accountId, money);
+    public void addMoney(String accountId, long money) {
+        try {
+            session.makeRequest().addMoney(accountId, money);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
-    public void getMoney(String accountId, long money) throws Exception {
-        session.terminalServer.getMoney(accountId, money);
+    public void getMoney(String accountId, long money) {
+        try {
+            session.makeRequest().getMoney(accountId, money);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            Terminal terminal = new TerminalImpl("vitaly", 123, 124);
+            terminal.accountReport("vitaly");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

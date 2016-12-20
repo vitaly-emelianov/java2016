@@ -5,7 +5,7 @@ package ru.sbt.homework_terminal;
  */
 public interface Terminal {
 
-    String accountReport(String accountId);
+    String accountReport(String accountId) throws Exception;
 
     void addMoney(String accountId, long money) throws Exception;
 

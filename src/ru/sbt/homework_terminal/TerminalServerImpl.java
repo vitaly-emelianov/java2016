@@ -31,6 +31,9 @@ public class TerminalServerImpl implements TerminalServer {
 
     @Override
     public String getAccountReport(String id) {
+        if (accounts.get(id) == null) {
+            throw new NoSuchElementException("No such client found.");
+        }
         return (accounts.get(id)).getReport();
     }
 
@@ -50,7 +53,7 @@ public class TerminalServerImpl implements TerminalServer {
         if (money % 100 == 0 || account.sum <= money) {
             account.sum -= money;
         } else {
-            throw new Exception("Money cannot be divided by 100.");
+            throw new Exception("Money cannot be divided by 100 or not enough.");
         }
     }
 }
