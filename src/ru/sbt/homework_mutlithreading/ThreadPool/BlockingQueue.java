@@ -1,4 +1,4 @@
-package ru.sbt.homework_mutlithreading.homework_06;
+package ru.sbt.homework_mutlithreading.ThreadPool;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -13,23 +13,19 @@ public class BlockingQueue<E> implements CustomQueue<E> {
     @Override
     public synchronized void enqueue(E e) {
         elements.add(e);
-        notifyAll();
     }
 
     @Override
     public synchronized E dequeue() {
-        while (elements.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException exception) {
-                return null;
-            }
-        }
         return elements.remove();
     }
 
     @Override
     public synchronized boolean isEmpty() {
         return elements.isEmpty();
+    }
+
+    public synchronized int size() {
+        return elements.size();
     }
 }
