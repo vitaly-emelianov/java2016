@@ -21,10 +21,4 @@ public class ExecutionManagerImpl implements ExecutionManager {
         ThreadPoolManager threadPoolManager = new ThreadPoolManager(10, callback, runnableList);
         return threadPoolManager.getContext();
     }
-
-    public static void main(String[] args) {
-        ExecutionManager executionManager = new ExecutionManagerImpl();
-        executionManager.execute(() -> System.out.println("hello"), () -> System.out.println(123), () -> System.out.println("hello 2"));
-
-    }
 }

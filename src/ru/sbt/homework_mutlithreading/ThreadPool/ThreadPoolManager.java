@@ -18,15 +18,15 @@ public class ThreadPoolManager {
 
     public ThreadPoolManager(int poolSize, Runnable callback, List<Runnable> runnables) {
         this.poolSize = poolSize;
-        submitTasks(runnables);
-        this.initAllConsumers();
         this.context = new ContextImpl(callback, runnables);
         this.callback = callback;
+        submitTasks(runnables);
+        this.initAllConsumers();
     }
 
     private void initAllConsumers() {
         for (Integer i = 0; i < poolSize; i++) {
-            Thread thread = new Thread(new Worker(blockingQueue, i.toString()));
+            Thread thread = new Thread(new Worker(blockingQueue));
             threads.add(thread);
             thread.start();
         }
@@ -41,18 +41,15 @@ public class ThreadPoolManager {
     }
 
     private class Worker implements Runnable {
-
-        private String name;
         private BlockingQueue<Runnable> queue;
 
-        public Worker(BlockingQueue<Runnable> blockingQueue, String workerID) {
+        public Worker(BlockingQueue<Runnable> blockingQueue) {
             this.queue = blockingQueue;
-            this.name = workerID;
         }
 
         @Override
         public void run() {
-            if (context.isToFinish()) {
+            if (context.isToFinish() || blockingQueue.isEmpty()) {
                 synchronized (ThreadPoolManager.this) {
                     if (!context.isCallbackCalled()) {
                         context.makeCallbackCalled();
@@ -66,7 +63,6 @@ public class ThreadPoolManager {
                     try {
                         runnable.run();
                         context.incrementCompletedTaskCount();
-                        System.out.println("Task was completed by " + this.name);
                     } catch (Exception e) {
                         context.incrementFailedTaskCount();
                     }

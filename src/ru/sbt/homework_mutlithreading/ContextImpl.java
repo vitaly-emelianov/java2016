@@ -13,7 +13,6 @@ public class ContextImpl implements Context {
     private final AtomicInteger completedTaskCount;
     private final AtomicInteger failedTaskCount;
     private final AtomicInteger interruptedTaskCount;
-    private final ThreadPoolManager threadPoolManager;
     private boolean toFinish;
     private boolean callbackCalled;
 
@@ -33,7 +32,6 @@ public class ContextImpl implements Context {
         this.completedTaskCount = new AtomicInteger(0);
         this.failedTaskCount = new AtomicInteger(0);
         this.interruptedTaskCount = new AtomicInteger(0);
-        this.threadPoolManager = new ThreadPoolManager(10, callback, runnables);
         this.toFinish = false;
         this.callbackCalled = false;
     }
